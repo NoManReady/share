@@ -1,0 +1,102 @@
+/*
+Icon classes can be used entirely standalone. They are named after their original file names.
+
+Example usage in HTML:
+
+`display: block` sprite:
+<div class="icon-home"></div>
+
+To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+
+// CSS
+.icon {
+  display: inline-block;
+}
+
+// HTML
+<i class="icon icon-home"></i>
+*/
+.icon-bill {
+  background-image: url(../assets/sprite.png);
+  background-position: -608px -184px;
+  width: 200px;
+  height: 200px;
+}
+.icon-chain {
+  background-image: url(../assets/sprite.png);
+  background-position: -912px 0px;
+  width: 200px;
+  height: 200px;
+}
+.icon-debang {
+  background-image: url(../assets/sprite.png);
+  background-position: 0px 0px;
+  width: 284px;
+  height: 164px;
+}
+.icon-ditie {
+  background-image: url(../assets/sprite.png);
+  background-position: -608px 0px;
+  width: 284px;
+  height: 164px;
+}
+.icon-funeng {
+  background-image: url(../assets/sprite.png);
+  background-position: 0px -368px;
+  width: 284px;
+  height: 164px;
+}
+.icon-logo {
+  background-image: url(../assets/sprite.png);
+  background-position: 0px -772px;
+  width: 290px;
+  height: 72px;
+}
+.icon-net {
+  background-image: url(../assets/sprite.png);
+  background-position: 0px -552px;
+  width: 200px;
+  height: 200px;
+}
+.icon-park {
+  background-image: url(../assets/sprite.png);
+  background-position: -660px -552px;
+  width: 200px;
+  height: 200px;
+}
+.icon-pingan {
+  background-image: url(../assets/sprite.png);
+  background-position: -304px -368px;
+  width: 284px;
+  height: 164px;
+}
+.icon-res {
+  background-image: url(../assets/sprite.png);
+  background-position: -220px -552px;
+  width: 200px;
+  height: 200px;
+}
+.icon-tude {
+  background-image: url(../assets/sprite.png);
+  background-position: -440px -552px;
+  width: 200px;
+  height: 200px;
+}
+.icon-zhongtie {
+  background-image: url(../assets/sprite.png);
+  background-position: -304px 0px;
+  width: 284px;
+  height: 164px;
+}
+.icon-zhongyou {
+  background-image: url(../assets/sprite.png);
+  background-position: 0px -184px;
+  width: 284px;
+  height: 164px;
+}
+.icon-zhongyuan {
+  background-image: url(../assets/sprite.png);
+  background-position: -304px -184px;
+  width: 284px;
+  height: 164px;
+}
