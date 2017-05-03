@@ -59,7 +59,7 @@ export default (options) => {
                         reject(res)
                         break
                     default:
-                        resolve(res)
+                        resolve(res.data)
                 }
             })
             .catch(err => {

@@ -1,3 +1,4 @@
+import Mock from 'mockjs'
 const userMap = {
     admin: {
         role: ['admin'],
@@ -17,6 +18,15 @@ const userMap = {
     }
 }
 
+const { users } = Mock.mock({
+    'users|685': [{
+        date: '@date',
+        name: '@string',
+        'age|16-30': 1,
+        address: '@region',
+        'desc|2-10': 'address'
+    }]
+})
 export default {
     login: config => {
         const { userCode } = config.params;
@@ -52,5 +62,12 @@ export default {
         setTimeout(() => {
             resolve([200, { data: 'success' }]);
         }, 100);
+    }),
+    getUsers: (config) => new Promise(resolve => {
+        let { pageIndex, pageSize } = config.params
+        let _users = users.slice((pageIndex - 1) * pageSize, pageIndex * pageSize)
+        setTimeout(() => {
+            resolve([200, { users: _users, count: users.length }])
+        })
     })
 };

@@ -1,82 +1,85 @@
 <script>
-import menus from '../mock/menu'
 import { Menu, MenuItem, Submenu, Icon } from 'iview'
+import Api from '@/api'
+
+let $$path=null
 export default {
     name: 'iMenu',
     data() {
         return {
-            menus: Object.freeze(menus),
             leaf: null,
             path: []
         }
     },
-    created() {
-        this.initLeaf(this.$route.path)
-    },
-    mounted(){
-        // console.log(this.menus)
-    },
-    computed: {
-        menuFatten() {
-            const menusFlatten = []
-            this.iterator(this.menus, menusFlatten)
-            return menusFlatten
+    props:['menus'],
+    beforeUpdate(){
+        if($$path===this.$route.path){
+            return
         }
+        $$path=this.$route.path
+        this.initLeaf(this.$route.path)
     },
     watch: {
         '$route': function (v) {
             this.initLeaf(v.path)
         }
     },
+    computed:{
+        flatMenus(){
+            const _menus=[]
+            this.iterator(this.menus,_menus)
+            return _menus
+        }
+    },
     methods: {
         initLeaf(path) {
             let _path = []
-            for (let menu of this.menuFatten) {
-                if (menu.MENU_PATH === path) {
+            for (let menu of this.flatMenus) {
+                if (menu.path === path) {
                     this.leaf = menu
                     break
                 }
             }
             if (!this.leaf) {
-                this.leaf = _.find(this.menuFatten, menu => {
-                    return menu.MENU_PATH
+                this.leaf = _.find(this.flatMenus, menu => {
+                    return menu.path
                 })
+                this.$router.push(this.leaf.path)
+                return
             }
-            _path.push(this.leaf)
-            if (this.leaf.PARENT_MENU_ID) {
-                let parent = _.find(this.menuFatten, r => {
-                    return r.MENU_ID === this.leaf.PARENT_MENU_ID
+            let _leaf = this.leaf
+            while (_leaf) {
+                _path.unshift(_leaf)
+                _leaf = _.find(this.flatMenus, r => {
+                    return r.id === _leaf.pid
                 })
-                if (parent) {
-                    _path.unshift(parent)
-                }
             }
             this.path = _path
-            this.$store.dispatch('change_crumb', this.path.map(p => p.MENU_NAME))
-            this.$store.dispatch('change_title', this.leaf.MENU_NAME)
+            this.$store.dispatch('change_crumb', this.path.map(p => p.title))
+            this.$store.dispatch('change_title', this.leaf.title)
         },
         iterator(data, target) {
             data.forEach(d => {
                 target.push(d)
-                if (d.CHILDS) {
-                    this.iterator(d.CHILDS, target)
+                if (d.childs) {
+                    this.iterator(d.childs, target)
                 }
             })
         },
         generator(menus, icon) {
             return menus.map(menu => {
-                if (menu.CHILDS) {
-                    return (<Submenu name={menu.MENU_ID}>
+                if (menu.childs && menu.childs.length) {
+                    return (<Submenu name={menu.id}>
                         <template slot="title">
                             {icon ? <Icon class="mr10" type="ios-navigate"></Icon> : ''}
-                            {menu.MENU_NAME}
+                            {menu.title}
                         </template>
-                        {this.generator(menu.CHILDS)}
+                        {this.generator(menu.childs)}
                     </Submenu>)
                 }
-                return (<Menu-item name={menu.MENU_ID}>
-                    <router-link class="menu-over" active-class="menu-active" tag='span' to={menu.MENU_PATH}>
-                        {icon ? <Icon class="mr10" type="ios-navigate"></Icon> : ''}{menu.MENU_NAME}
+                return (<Menu-item name={menu.id}>
+                    <router-link class="menu-over" active-class="menu-active" tag='span' to={menu.path}>
+                        {icon ? <Icon class="mr10" type="ios-navigate"></Icon> : ''}{menu.title}
                     </router-link>
                 </Menu-item>)
             })
@@ -84,8 +87,8 @@ export default {
     },
     render(h) {
         let menusJSX = this.generator(this.menus, true)
-        let activeName = this.leaf.MENU_ID
-        let openNames = this.path.map(r => r.PARENT_MENU_ID)
+        let activeName = this.leaf ? this.leaf.id : -1
+        let openNames = this.path.map(r => r.pid)
         let data = {
             props: {
                 activeName,
@@ -94,6 +97,7 @@ export default {
                 width: 'auto'
             }
         }
+        console.log(activeName)
         return (
             <Menu {...data}>
                 {menusJSX}

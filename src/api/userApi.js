@@ -22,3 +22,14 @@ export function getUserInfo() {
         url: '/v1/userInfo'
     })
 }
+
+// 获取全部用户
+export function getUsers({pageSize=10,pageIndex=1}){
+    return fetch({
+        url:'/v1/users',
+        params:{
+            pageIndex,
+            pageSize
+        }
+    })
+}

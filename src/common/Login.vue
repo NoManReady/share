@@ -13,7 +13,7 @@
           </i-input>
         </Form-item>
         <Form-item cla>
-          <Button type="primary" :loading="loading" long @click.prev="handleSubmit" html-type="submit">
+          <Button type="primary" :loading="loading" long @click.prev="handleSubmit">
             <span v-if="loading">登录中...</span>
             <span v-else>登录</span>
           </Button>
@@ -24,6 +24,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+import Vue from 'vue'
 export default {
   data() {
     // 用户校验

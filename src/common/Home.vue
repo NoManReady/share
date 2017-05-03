@@ -11,7 +11,7 @@
     </div>
     <div class="container">
       <div class="nav">
-        <iMenu></iMenu>
+        <iMenu :menus="menus"></iMenu>
       </div>
       <div class="main">
         <iCrumb class="main-crumb" :crumbs="crumbs"></iCrumb>
@@ -27,8 +27,22 @@
 import { mapGetters } from 'vuex'
 import iMenu from '@/components/Menu'
 import iCrumb from '@/components/Crumb'
+import Api from '@/api'
+
 export default {
   name: 'Home',
+  data() {
+    return {
+      menus: Object.freeze([])
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    Api.getMenus().then((data) => {
+      next(vm => {
+        vm.menus = Object.freeze(data.menus)
+      })
+    })
+  },
   components: {
     iMenu,
     iCrumb
