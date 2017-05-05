@@ -48,7 +48,13 @@ const menus = [{
         pid: '4',
         path: '/home/statistic/price',
         title: 'price',
-        childs: []
+        childs: [{
+            id:'4-3-1',
+            pid:'4-3',
+            path:'/home/aaa',
+            title:'test',
+            childs:[]
+        }]
     }]
 }]
 export default {

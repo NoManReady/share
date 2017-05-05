@@ -9,7 +9,7 @@ exports.assetsPath = function (_path) {
   return path.posix.join(assetsSubDirectory, _path)
 }
 
-exports.cssLoaders = function (options) {
+exports.cssLoaders = function (options, isVue = true) {
   options = options || {}
 
   var cssLoader = {
@@ -19,9 +19,9 @@ exports.cssLoaders = function (options) {
       sourceMap: options.sourceMap
     }
   }
-
+  let fallbackLoader = isVue ? 'vue-style-loader' : 'style-loader'
   // generate loader string to be used with extract text plugin
-  function generateLoaders (loader, loaderOptions) {
+  function generateLoaders(loader, loaderOptions) {
     var loaders = [cssLoader]
     if (loader) {
       loaders.push({
@@ -37,10 +37,10 @@ exports.cssLoaders = function (options) {
     if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
-        fallback: 'vue-style-loader'
+        fallback: fallbackLoader
       })
     } else {
-      return ['vue-style-loader'].concat(loaders)
+      return [fallbackLoader].concat(loaders)
     }
   }
 
@@ -48,7 +48,7 @@ exports.cssLoaders = function (options) {
   return {
     css: generateLoaders(),
     postcss: generateLoaders(),
-    // less: generateLoaders('less'),
+    less: generateLoaders('less'),
     sass: generateLoaders('sass', { indentedSyntax: true }),
     scss: generateLoaders('sass'),
     stylus: generateLoaders('stylus'),
@@ -59,11 +59,12 @@ exports.cssLoaders = function (options) {
 // Generate loaders for standalone style files (outside of .vue)
 exports.styleLoaders = function (options) {
   var output = []
-  var loaders = exports.cssLoaders(options)
+  var loaders = exports.cssLoaders(options, false)
   for (var extension in loaders) {
     var loader = loaders[extension]
+    console.log(new RegExp('\.' + extension + '$'))
     output.push({
-      test: new RegExp('\\.' + extension + '$'),
+      test: new RegExp('\.' + extension + '$'),
       use: loader
     })
   }

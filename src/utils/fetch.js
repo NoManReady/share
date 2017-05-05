@@ -30,7 +30,7 @@ function popRequest(config) {
     if (!_requests.length) {
         setTimeout(() => {
             store.dispatch('loading', false)
-        }, 300)
+        }, 0)
     }
 }
 

@@ -97,7 +97,6 @@ export default {
                 width: 'auto'
             }
         }
-        console.log(activeName)
         return (
             <Menu {...data}>
                 {menusJSX}

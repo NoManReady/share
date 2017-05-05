@@ -19,3 +19,14 @@ npm run build --report
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+##jsx support
+npm install
+  babel-plugin-syntax-jsx
+  babel-plugin-transform-vue-jsx
+  babel-helper-vue-jsx-merge-props
+  babel-preset-es2015
+  --save-dev
+
+##Promise support
+npm install babel-polyfill --save-dev

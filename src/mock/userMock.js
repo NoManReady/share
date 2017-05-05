@@ -1,4 +1,5 @@
 import Mock from 'mockjs'
+import { shuffle } from 'lodash'
 const userMap = {
     admin: {
         role: ['admin'],
@@ -21,10 +22,12 @@ const userMap = {
 const { users } = Mock.mock({
     'users|685': [{
         date: '@date',
-        name: '@string',
+        id: '@guid',
+        'status|1': [1, 2, 3],
+        name: '@shuffle(["武","孙","空"])',
         'age|16-30': 1,
-        address: '@region',
-        'desc|2-10': 'address'
+        address: '@city(true)',
+        'desc': '@csentence'
     }]
 })
 export default {
@@ -33,11 +36,9 @@ export default {
         return new Promise((resolve, reject) => {
             let _user = userMap[userCode]
             if (_user) {
-                setTimeout(() => {
-                    resolve([200, {
-                        data: _user
-                    }]);
-                }, 500);
+                resolve([200, {
+                    data: _user
+                }]);
             } else {
                 reject([500, { msg: '账号不正确' }])
             }
@@ -48,26 +49,20 @@ export default {
         return new Promise((resolve, reject) => {
             let _user = userMap[userCode]
             if (_user) {
-                setTimeout(() => {
-                    resolve([200, {
-                        data: _user
-                    }]);
-                }, 100);
+                resolve([200, {
+                    data: _user
+                }]);
             } else {
                 reject([500, { msg: '获取失败' }])
             }
         })
     },
     logout: () => new Promise(resolve => {
-        setTimeout(() => {
-            resolve([200, { data: 'success' }]);
-        }, 100);
+        resolve([200, { data: 'success' }]);
     }),
     getUsers: (config) => new Promise(resolve => {
         let { pageIndex, pageSize } = config.params
-        let _users = users.slice((pageIndex - 1) * pageSize, pageIndex * pageSize)
-        setTimeout(() => {
-            resolve([200, { users: _users, count: users.length }])
-        })
+        let _users = shuffle(users.slice((pageIndex - 1) * pageSize, pageIndex * pageSize))
+        resolve([200, { users: _users, count: users.length }])
     })
 };

@@ -1,17 +1,21 @@
 import axios from 'axios'
+import Mock from 'mockjs'
 import MockAdapter from 'axios-mock-adapter'
 
-const mock = new MockAdapter(axios)
+Mock.setup({
+  timeout:4000
+})
+const adapter = new MockAdapter(axios)
 
 // 各种mock数据import
 import userMock from './userMock'
 import menuMock from './menuMock'
 
-mock.onPost('/v1/login').reply(userMock.login)
-mock.onGet('/v1/geInfo').reply(userMock.getInfo)
-mock.onGet('/v1/users').reply(userMock.getUsers)
+adapter.onPost('/v1/login').reply(userMock.login)
+adapter.onGet(/\/v1\/geInfo/).reply(userMock.getInfo)
+adapter.onGet(/\/v1\/users/).reply(userMock.getUsers)
 
-mock.onGet('/v1/getMenus').reply(menuMock.getMenus)
+adapter.onGet(/\/getMenus/).reply(menuMock.getMenus)
 
 
-export default mock
+export default adapter

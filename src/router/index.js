@@ -2,8 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import homeRouter from './home'
 
-const Login = r => require(['@/common/Login'], r)
-const Home = r => require(['@/common/Home'], r)
+// const Login = r => require(['@/common/Login'], r)
+// const Home = r => require(['@/common/Home'], r)
+import Login from '@/common/Login'
+import Home from '@/common/Home'
 
 Vue.use(Router)
 

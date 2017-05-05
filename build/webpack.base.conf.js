@@ -9,7 +9,7 @@ function resolve(dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: ['babel-polyfill','./src/main.js']
   },
   output: {
     path: config.build.assetsRoot,
@@ -38,13 +38,6 @@ module.exports = {
         options: {
           formatter: require('eslint-friendly-formatter')
         }
-      }, {
-        test: /\.css$/,
-        loader: ['style-loader', 'css-loader']
-      },
-      {
-        test: /\.less$/,
-        loader: ['style-loader', 'css-loader', 'less-loader']
       },
       {
         test: /\.vue$/,
@@ -61,7 +54,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.assetsPath('img/[name].[hash:7].[ext]')
+          name: utils.assetsPath('img/[name].[ext]')
         }
       },
       {
@@ -69,7 +62,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+          name: utils.assetsPath('fonts/[name].[ext]')
         }
       }
     ]

@@ -9,14 +9,17 @@ import store from './store'
 import filters from './filters'
 import directives from './directives'
 import plugins from './plugins'
-import '@/mock'
 
 import '@/theme/_theme.less'
 
-
+import '@/css/test.css'
+const __env = process.env.NODE_ENV === 'production'
+if (!__env) {
+  require('@/mock')
+}
 // 引用iview
 Vue.use(iView)
-Vue.config.productionTip = process.env.NODE_ENV === 'production'
+Vue.config.productionTip = __env
 
 //引用插件
 Vue.use(plugins, {

@@ -4,12 +4,12 @@
       <i-form ref="loginForm" :model="loginForm" :rules="rules" :label-width="80">
         <Form-item class="mt10" prop="userCode">
           <i-input type="text" v-model="loginForm.userCode" size="large" placeholder="账号">
-            <Icon type="ios-person-outline" slot="prepend"></Icon>
+            <Icon type="ios-person-outline" slot="prepend" style="padding:0 10px;"></Icon>
           </i-input>
         </Form-item>
         <Form-item cla prop="passwd">
           <i-input type="password" v-model="loginForm.passwd" size="large" placeholder="密码">
-            <Icon type="ios-locked-outline" slot="prepend"></Icon>
+            <Icon type="ios-locked-outline" slot="prepend" style="padding:0 10px;"></Icon>
           </i-input>
         </Form-item>
         <Form-item cla>
