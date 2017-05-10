@@ -20,7 +20,8 @@ if (!__env) {
 // 引用iview
 Vue.use(iView)
 Vue.config.productionTip = __env
-
+let files=require.context('./',true,/\.\/views\/404\.vue/)
+console.log(files)
 //引用插件
 Vue.use(plugins, {
   lifecircle: false

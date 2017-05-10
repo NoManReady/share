@@ -36,5 +36,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
+.home-index{
+  color:red;
+}
 </style>

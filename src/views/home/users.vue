@@ -13,13 +13,20 @@
       </div>
     </Modal>
     <h1 class="tit">User Table</h1>
-    <i-table border :columns="columns" :data="users" height="400"></i-table>
+    <i-table border :columns="columns" :data="users" height="400" @on-selection-change="onSelection">
+      <!--<p slot="header">nomanready</p>
+      <p slot="footer">nomanready</p>-->
+    </i-table>
     <Page show-total show-elevator show-sizer class-name="pager" :total="total" @on-change="onChange" @on-page-size-change="onPageSizeChange"></Page>
   </div>
 </template>
 <script>
 import Api from '@/api'
 const userColumn = [{
+  type: 'selection',
+  width: 60,
+  align: 'center'
+},{
   type: 'index',
   width: 60,
   align: 'center'
@@ -100,7 +107,8 @@ export default {
       pageSize: 10,
       pageIndex: 1,
       isView: false,
-      view: null
+      view: null,
+      selected:[]
     }
   },
   created() {
@@ -120,6 +128,13 @@ export default {
         pageSize: this.pageSize,
         pageIndex: this.pageIndex
       }).then(data => {
+        this.selected.forEach(s=>{
+          data.users.forEach(u=>{
+            if(u.id===s){
+              u._checked=true
+            }
+          })
+        })
         this.users = Object.freeze(data.users)
         this.total = data.count
       })
@@ -150,6 +165,11 @@ export default {
       let _item = this.users[index]
       this.view = _item
       this.isView = true
+    },
+    onSelection(selections){
+      this.selected=selections.map(selection=>{
+        return selection.id
+      })
     }
   }
 }
